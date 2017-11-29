@@ -82,6 +82,7 @@ class Cube extends Model
                 }
             }
         }
+        return true;
     }
 
 

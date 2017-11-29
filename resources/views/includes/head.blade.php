@@ -30,41 +30,12 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <style>
-    /* Preloader */
 
-    #preloader {
-        position: fixed;
-        display: none;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ffffff38;
-        /* change if the mask should have another color then white */
-        z-index: 99;
-        /* makes sure it stays on top */
-    }
-
-    #status {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        left: 50%;
-        /* centers the loading animation horizontally one the screen */
-        top: 50%;
-        /* centers the loading animation vertically one the screen */
-        background-image: url(https://raw.githubusercontent.com/niklausgerber/PreLoadMe/master/img/status.gif);
-        /* path to your loading animation */
-        background-repeat: no-repeat;
-        background-position: center;
-        margin: -100px 0 0 -100px;
-        /* is width and height divided by two */
-    }
 </style>
 <script>
     $( document ).ready(function() {
         $(".alert.alert-danger").hide();
-        $("form").submit(function(e){
+        $("#submitButton").click(function(e){
 
             $("#submitButton").prop('disabled', true);
             $('#readOnlyResults').html('');
@@ -83,18 +54,17 @@
                     var nYmTmp=nYm[i].split(" ");
                     var n=nYmTmp[0];
                     var m=nYmTmp[1];
-                    console.log(nYmTmp);
-                    $("#preloader").show();
-
                     $.ajax({
                         type: "POST",
                         url: "calculate",
+                        cache: false,
                         async : false,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data: {"sentences": dataCubes[i+1], 'n': n, 'm':m},
                         dataType: "json",
+
 
                         success: function(response){
 
@@ -109,9 +79,6 @@
                                 $('#readOnlyResults').append("\n");
                             }
                         },
-                        complete: function(){
-                            $('#preloader').hide();
-                        }
                     });
                 }
             }else{
