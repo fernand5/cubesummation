@@ -1,51 +1,53 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+Cube Summation usando Laravel framework 5.4 con arboles fenwick
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+# CODING CHALLENGE
+- Problema: https://www.hackerrank.com/challenges/cube-summation
 
-## About Laravel
+## Install
+- Clonar reposotorio
+- Instalar dependencias ```composer install```
+- Generar clave de seguridad ```php artisan key:generate```
+- Correr servidor ```php artisan serve```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## PHP-unit tests
+- Correr el comando ```./vendor/bin/phpunit```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Ejemplo de entrada
+```
+2
+4 5
+UPDATE 2 2 2 4
+QUERY 1 1 1 3 3 3
+UPDATE 1 1 1 23
+QUERY 2 2 2 4 4 4
+QUERY 1 1 1 3 3 3
+2 4
+UPDATE 2 2 2 1
+QUERY 1 1 1 1 1 1
+QUERY 1 1 1 2 2 2
+QUERY 2 2 2 2 2 2
+```
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+## Ejemplo de salida
+```
+4
+4
+27
+0
+1
+1
+```
 
-## Learning Laravel
+## Capas de la aplicacion
+- Capa de presentación o vista: Recopila la información del usuario o cliente y la envía al servidor. Recibe los resultados de la capa de proceso y los muestra al cliente.En el proyecto, la función de esta capa es cubierta por los archivos de la carpeta “resources” ya que Aquí se guardan los archivos de vistas. Es decir, acá está el Frontend de la aplicación.
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+- Capa de aplicación o de proceso: Recibe la entrada de datos de la capa de presentación o vista, además se encarga de interactuar con la capa de datos para realizar operaciones, y finalmente manda los resultados procesados a la capa de presentación.En el proyecto, la función de la capa de proceso es cubierta por los archivos dentro de la carpeta “app” más específicamente por el archivo CubeController.php ya que en estos dos archivos es en donde se centra la logística de la aplicación y el control  de datos para ser entregados a la capa de presentación.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+- Capa de persistencia o de datos: Almacena y recupera los datos de la aplicación. En el proyecto no existe ninguna base datos que almacena todos los datos, sin embargo la clase contenida en Cube.php realiza el trabajo de almacenar los datos de un arreglo 3D.
 
-## Laravel Sponsors
+## La responsabilidad de cada clase creada
+- Clase CubeController: En esta clase lleva a cabo la funcionalidad principal del ejercicio, ya que la misma posee un método (calculate) que recibe un request POST con los parametros N, M y las sentencias del test-case
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+- Clase Cube: En esta clase se representa la estructura de una matriz 3D que representa cada cubo como un objeto. Esta clase almacena los atributos N, M, y la matriz. Posee los métodos setValuePosition que corresponde a la aplicación de la operación “UPDATE” en el ejercicio; y el método getQuery que corresponde a la operación “QUERY” del ejercicio.
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+- Clase CalculateTest: Prueba PHPunit que verifica los métodos de la clase Cube.
