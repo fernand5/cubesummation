@@ -33,9 +33,9 @@ class CubeController extends Controller
             foreach ($dataSentence as $line){
                 $sentence=explode(" ", $line);
                 if($sentence[0]=='UPDATE'){
-                    $cube->setValuePosition($sentence[1],$sentence[2],$sentence[3],$sentence[4]);
+                    $cube->setValuePosition($sentence[1]-1,$sentence[2]-1,$sentence[3]-1,$sentence[4]);
                 }elseif ($sentence[0]=='QUERY'){
-                    array_push($response,$cube->getQuery($sentence[1],$sentence[2],$sentence[3],$sentence[4],$sentence[5],$sentence[6]));
+                    array_push($response,$cube->getQuery($sentence[1]-1,$sentence[2]-1,$sentence[3]-1,$sentence[4]-1,$sentence[5]-1,$sentence[6]-1));
                 }else{
                     return response()->json([
                         'error'=>'Command not found'

@@ -13,7 +13,7 @@
                     <textarea id="areaData" name="textAreaValues" class="form-control" rows="5" id="comment"></textarea>
                 </div>
                 <div class="form-group">
-                    <input id="submitButton" type="submit" value="Calculate" class="btn btn-form">
+                    <input id="submitButton" type="submit" value="Calculate" class="btn btn-form" onclick="$("#preloader").show();">
                 </div>
 
             </form>
@@ -21,8 +21,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <h1> Result section </h1>
-
-                    <textarea id="readOnlyResults" rows="4" cols="50" readonly></textarea>
+                    <!-- Preloader -->
+                    <div id="preloader">
+                        <div id="status">&nbsp;</div>
+                    </div>
+                    <textarea id="readOnlyResults" rows="15" cols="50" readonly></textarea>
 
                 </div>
             </div>
